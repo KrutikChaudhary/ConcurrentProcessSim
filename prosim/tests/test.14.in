@@ -1,0 +1,10 @@
+2 3
+Proc1 3 1
+DOOP 5
+BLOCK 5
+HALT
+
+Proc2 3 1
+BLOCK 5
+DOOP 5
+HALT

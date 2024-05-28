@@ -1,0 +1,8 @@
+2 3
+Proc1 2 1
+DOOP 5
+HALT
+
+Proc2 2 1
+DOOP 3
+HALT

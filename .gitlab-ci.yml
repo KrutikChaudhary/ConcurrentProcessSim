@@ -1,0 +1,404 @@
+# use the official gcc image, based on debian
+# can use verions as well, like gcc:5.2
+# see https://hub.docker.com/_/gcc/
+image: gcc
+
+build:
+  tags:
+    - ugrad
+  stage: build
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - if [ -f CMakeLists.txt ]; then cmake CMakeLists.txt; fi
+    - make
+  artifacts:
+    paths:
+      - prosim/prosim
+
+test00:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 00 . prosim
+
+test01:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 01 . prosim
+
+test02:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 02 . prosim
+
+test03:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 03 . prosim
+
+test04:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 04 . prosim
+
+test10:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 10 . prosim
+
+test11:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 11 . prosim
+
+test12:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 12 . prosim
+
+test13:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 13 . prosim
+
+test14:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 14 . prosim
+
+test15:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 15 . prosim
+
+test16:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 16 . prosim
+
+test17:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 17 . prosim
+
+test18:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 18 . prosim
+
+test19:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 19 . prosim
+
+test20:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 20 . prosim
+
+test21:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 21 . prosim
+
+test22:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 22 . prosim
+
+test23:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 23 . prosim
+
+test24:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 24 . prosim
+
+test25:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 25 . prosim
+
+test26:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 26 . prosim
+
+test27:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 27 . prosim
+
+test28:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 28 . prosim
+
+test29:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 29 . prosim
+
+test30:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 30 . prosim
+
+test31:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 31 . prosim
+
+test32:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 32 . prosim
+
+test33:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 33 . prosim
+
+test34:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 34 . prosim
+
+test35:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 35 . prosim
+
+test36:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 36 . prosim
+
+test37:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 37 . prosim
+
+test38:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 38 . prosim
+
+test39:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+    - $CI_COMMIT_MESSAGE =~ /NO_TEST/
+  script:
+    - cd prosim
+    - ./tests/test.sh 39 . prosim

@@ -1,0 +1,16 @@
+2 3
+Proc1 6 1
+DOOP 5
+LOOP 5
+  BLOCK 1
+  DOOP 4
+END
+HALT
+
+Proc2 6 0
+DOOP 5
+LOOP 4
+  BLOCK 2
+  DOOP 5
+END
+HALT

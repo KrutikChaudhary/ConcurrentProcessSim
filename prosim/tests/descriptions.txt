@@ -1,0 +1,44 @@
+Single Process Tests
+====================
+00: Process with DOOP, BLOCK, DOOP, BLOCK, DOOP; with quantum > DOOP length
+01: Process with DOOP, BLOCK, DOOP, BLOCK, DOOP; with quantum < DOOP length
+02: Process with LOOPs, DOOPs, and BLOCKs; with quantum > DOOP length
+03: Process with LOOPs, DOOPs, and BLOCKs; with quantum < DOOP length
+04: Process with nested LOOPs, DOOPs, and BLOCKs; with quantum < and > DOOP length
+
+Multiple processes, Round robin scheduling (priority = 1, for all processes)
+============================================================================
+10: 2 processes with single DOOPs of equal length
+11: 2 processes with single DOOPs; DOOP of P1 > DOOP of P2
+12: 2 processes with single DOOPs; DOOP of P1 < DOOP of P2
+13: 2 processes: a process with a BLOCK and DOOP and a process with a DOOP and BLOCK
+14: 2 processes: a process with a DOOP and BLOCK and a process with a BLOCK and DOOP
+15: 2 CPU-bound processes
+16: 2 I/O bound processes
+17: 4 CPU-bound processes
+18: 4 I/O-bound processes
+19: 4 CPU-bound processes and 4 I/O bound processes
+
+Multiple processes, Shortest Job First scheduling (priority = -1, for all processes)
+20: 2 processes with single DOOPs of equal length
+21: 2 processes with single DOOPs; DOOP of P1 > DOOP of P2
+22: 2 processes with single DOOPs; DOOP of P1 < DOOP of P2
+23: 2 processes: P1 with BLOCK and DOOP and P2 with a DOOP < than P1
+24: 2 processes: P1 with BLOCK and DOOP and P2 with a DOOP << than P1
+25: 2 CPU-bound processes
+26: 2 I/O bound processes
+27: 4 CPU-bound processes
+28: 4 I/O-bound processes
+29: 4 CPU-bound processes and 4 I/O bound processes
+
+Multiple processes, Priority scheduling (priority = n - p, for process p = 1, 2, ... n)
+30: 2 processes with single DOOPs of equal length with priority of P1 > priority of P2
+31: 2 processes with single DOOPs of equal length with priority of P1 < priority of P2
+32: 2 processes with single DOOPs, DOOP of P1 << DOOP of P2, priority of P1 > priority of P2
+33: 2 processes: P1 with BLOCK and DOOP and P2 with a DOOP, priority of P1 < priority of P2
+34: 2 processes: P1 with BLOCK and DOOP and P2 with a DOOP, priority of P1 > priority of P2
+35: 2 CPU-bound processes
+36: 2 I/O bound processes
+37: 4 CPU-bound processes
+38: 4 I/O-bound processes
+39: 4 CPU-bound processes and 4 I/O bound processes

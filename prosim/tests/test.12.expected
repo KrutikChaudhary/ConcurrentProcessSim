@@ -1,0 +1,12 @@
+00000: process 1 new
+00000: process 1 ready
+00000: process 2 new
+00000: process 2 ready
+00000: process 1 running
+00003: process 1 finished
+00003: process 2 running
+00006: process 2 ready
+00006: process 2 running
+00008: process 2 finished
+Process 1: Run time 3, Block time 0, Wait time 0
+Process 2: Run time 5, Block time 0, Wait time 3

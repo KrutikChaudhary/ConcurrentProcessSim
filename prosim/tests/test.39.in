@@ -2,7 +2,7 @@
 Proc1 6 -1
 DOOP 5
 LOOP 5
-  BLOCK -1
+  BLOCK 1
   DOOP 4
 END
 HALT
@@ -62,4 +62,3 @@ LOOP 4
   DOOP 2
 END
 HALT
-

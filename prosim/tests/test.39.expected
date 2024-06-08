@@ -206,7 +206,7 @@
 00132: process 4 ready
 00132: process 4 running
 00134: process 4 finished
-Process 1: Run time 25, Block time -5, Wait time 35
+Process 1: Run time 25, Block time 5, Wait time 35
 Process 2: Run time 25, Block time 8, Wait time 96
 Process 3: Run time 25, Block time 5, Wait time 70
 Process 4: Run time 25, Block time 8, Wait time 101

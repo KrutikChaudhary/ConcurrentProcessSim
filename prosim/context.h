@@ -23,7 +23,6 @@ typedef struct context {
     int priority;
     char state[15];
     int ip;
-    int clock;
     int run_time;
     int wait_time;
     int block_time;
@@ -34,6 +33,7 @@ extern int context_next_op(context *cur);
 extern int context_print(context *cur, FILE *fout);
 extern context *context_load(FILE *fin);
 extern void context_stats(context *cur, FILE *fout);
+extern int allFinished(context *cur);
 
 
 #endif //ASSIGNMENT_1_CONTEXT_H

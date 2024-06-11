@@ -78,6 +78,7 @@ int time = 0;
 context *contexts;
 int numProcs;
 int quantum;
+int quanT;
 extern context *context_load(FILE *fin) {
 
 
@@ -147,44 +148,76 @@ extern context *context_load(FILE *fin) {
         printf("%5.5d: process %d %s\n",time,contexts[i].idx, contexts[i].state);
     }
 
-    int quanT = 0;
+
+
+
+
+
+    quanT = quantum;
     context *current;
     while(!allFinished(contexts)){
+        context_next_op(rq->priorityQueue[0]);
+//        if(quanT==0 && !strcmp(rq->priorityQueue[0]->state,"ready")){
+//            strcpy(rq->priorityQueue[0]->state, "running");
+//            printf("%5.5d: process %d %s\n",time,rq->priorityQueue[0]->idx, rq->priorityQueue[0]->state);
+//        }
 
-        if(quanT==0 && !strcmp(rq->priorityQueue[0]->state,"ready")){
-            strcpy(rq->priorityQueue[0]->state, "running");
-            printf("%5.5d: process %d %s\n",time,rq->priorityQueue[0]->idx, rq->priorityQueue[0]->state);
-        }
+        //1
         for(int i = 0; i<numProcs; i++){
             if(!strcmp(contexts[i].state,"blocked")){
-                //printf("%d\n",rq->size);
+                //printf("DDDDDDDDDDDDDDD\n",rq->size);
                 context_next_op(&contexts[i]);
             }
         }
-        if(!strcmp(rq->priorityQueue[0]->state, "ready")){
-            strcpy(rq->priorityQueue[0]->state, "running");
-            printf("%5.5d: process %d %s\n",time,rq->priorityQueue[0]->idx, rq->priorityQueue[0]->state);
-        }
-        else if(rq->size>0){
-            context_next_op(rq->priorityQueue[0]);
-        }
 
-        time++;
-        quanT++;
+//        else if(rq->size>0){
+//
+//        }
+
 
         //printf("%dq\n",time);
 
-        if(quanT>=quantum ){//reset quantum
 
-            quanT=0;
-            if(rq->priorityQueue[0]->code[rq->priorityQueue[0]->ip].op==OP_DOOP){
-                //printf("%d %d arg\n",rq->priorityQueue[0]->code[rq->priorityQueue[0]->ip].arg,rq->priorityQueue[0]->code[rq->priorityQueue[0]->ip].op );
-                if(rq->priorityQueue[0]->code[rq->priorityQueue[0]->ip].arg > 1){
-                    strcpy(rq->priorityQueue[0]->state, "ready");
-                    printf("%5.5d: process %d %s\n",time,rq->priorityQueue[0]->idx, rq->priorityQueue[0]->state);
+//            strcpy(rq->priorityQueue[0]->state, "running");
+//            printf("%5.5d: process %d %s\n",time,rq->priorityQueue[0]->idx, rq->priorityQueue[0]->state);
+            //printf("RRRRR\n");
+            //int proc = 0;
+        if(!strcmp(rq->priorityQueue[0]->state, "ready")){
+
+
+            strcpy(rq->priorityQueue[0]->state, "running");
+            //printf("oyyy\n");
+            printf("%5.5d: process %d %s\n",time,rq->priorityQueue[0]->idx, rq->priorityQueue[0]->state);
+            //proc = 1;
+            //time--;
+            //            context_next_op(rq->priorityQueue[0]);
+        }
+
+
+        if(quanT<=0){//reset quantum
+            quanT=quantum;
+        }
+        quanT--;
+        time++;
+//        if(proc==1){
+////            quanT++;
+//        }
+        if(!strcmp(rq->priorityQueue[0]->state, "running") ) {
+            if (quanT == 0 || rq->priorityQueue[0]->code[rq->priorityQueue[0]->ip].arg == 0) {
+                //printf("oYYYYy\n");
+                if (rq->priorityQueue[0]->code[rq->priorityQueue[0]->ip].op == OP_DOOP) {
+                    //printf("%d %d arg\n",rq->priorityQueue[0]->code[rq->priorityQueue[0]->ip].arg,rq->priorityQueue[0]->code[rq->priorityQueue[0]->ip].op );
+                    if (rq->priorityQueue[0]->code[rq->priorityQueue[0]->ip].arg >= 1) {
+//                        time--;
+                        strcpy(rq->priorityQueue[0]->state, "ready");
+                        printf("%5.5d: process %d %s\n", time, rq->priorityQueue[0]->idx, rq->priorityQueue[0]->state);
+                    }
                 }
             }
         }
+
+
+        //printf("%d %d\n",time,quanT);
 
 
     }
@@ -199,15 +232,7 @@ extern context *context_load(FILE *fin) {
     return contexts;
 }
 
-extern int allFinished(context *cur){
-    for(int i = 0; i<numProcs; i++){
-        if(strcmp(cur[i].state,"finished")){
-            return 0;
-        }
-    }
 
-    return 1;
-}
 
 extern int context_next_op(context *cur) {
     int count;
@@ -231,33 +256,41 @@ extern int context_next_op(context *cur) {
                     strcpy(cur->state, "ready");
                     printf("%5.5d: process %d %s\n",time,cur->idx, cur->state);
                     enqueue(rq,cur);
-
+                    quanT=quantum;
                     //time++;
                     //printf("%d  oyy\n",rq->size);
                 }
                 else if(strcmp(cur->state,"running")){
                     strcpy(cur->state, "running");
                     printf("%5.5d: process %d %s\n",time,cur->idx, cur->state);
-
+                    //time--;
                 }
                 cur->run_time++;
-
                 cur->code[cur->ip].arg--;
+
                 if(cur->code[cur->ip].arg==0){
                     cur->ip++;
                 }
                 return 1;
             case OP_BLOCK:
-                cur->block_time++;
+
                 if(strcmp(cur->state,"blocked")){
                     strcpy(cur->state, "blocked");
                     printf("%5.5d: process %d %s\n",time,cur->idx, cur->state);
                     dequeue(rq);
+
+                    time++;
+                    //quanT++;
                     //return 1;
+                } else {
+                    cur->block_time++;
+                    cur->code[cur->ip].arg--;
                 }
-                cur->code[cur->ip].arg--;
+                //printf("size %d\n",rq->size);
+                //printf("%d REMAINS\n",cur->code[cur->ip].arg);
                 if(cur->code[cur->ip].arg==0){
                     cur->ip++;
+
                 }
                 return 1;
 
@@ -302,6 +335,17 @@ extern int context_next_op(context *cur) {
         }
     }
 }
+
+extern int allFinished(context *cur){
+    for(int i = 0; i<numProcs; i++){
+        if(strcmp(cur[i].state,"finished")){
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
 
 extern int context_print(context *cur, FILE *fout) {
     switch (cur->code[cur->ip].op) {

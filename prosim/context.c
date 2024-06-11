@@ -29,10 +29,18 @@ void swap(context **a, context **b) {
 }
 
 void bubbleUp(PriorityQueue *queue, int index) {
-    while (index > 0 && queue->priorityQueue[index]->priority < queue->priorityQueue[(index - 1) / 2]->priority) {
-        swap(&queue->priorityQueue[index], &queue->priorityQueue[(index - 1) / 2]);
-        index = (index - 1) / 2;
+    if (queue->priorityQueue[index]->priority < 0) {
+        while (index > 0 && queue->priorityQueue[index]->code[queue->priorityQueue[index]->ip].argTime < queue->priorityQueue[(index - 1) / 2]->code[queue->priorityQueue[(index - 1) / 2]->ip].argTime) {
+            swap(&queue->priorityQueue[index], &queue->priorityQueue[(index - 1) / 2]);
+            index = (index - 1) / 2;
+        }
+    } else {
+        while (index > 0 && queue->priorityQueue[index]->priority < queue->priorityQueue[(index - 1) / 2]->priority) {
+            swap(&queue->priorityQueue[index], &queue->priorityQueue[(index - 1) / 2]);
+            index = (index - 1) / 2;
+        }
     }
+
 }
 
 void enqueue(PriorityQueue *queue, context *ctx) {
@@ -50,17 +58,28 @@ void bubbleDown(PriorityQueue *queue, int index) {
     int leftChildIdx = 2 * index + 1;
     int rightChildIdx = 2 * index + 2;
 
-    if (leftChildIdx < queue->size && queue->priorityQueue[leftChildIdx]->priority < queue->priorityQueue[smallest]->priority) {
-        smallest = leftChildIdx;
-    }
-    if (rightChildIdx < queue->size && queue->priorityQueue[rightChildIdx]->priority < queue->priorityQueue[smallest]->priority) {
-        smallest = rightChildIdx;
+    if (queue->priorityQueue[smallest]->priority < 0) {
+        if (leftChildIdx < queue->size && queue->priorityQueue[leftChildIdx]->code[queue->priorityQueue[leftChildIdx]->ip].argTime < queue->priorityQueue[smallest]->code[queue->priorityQueue[smallest]->ip].argTime) {
+            smallest = leftChildIdx;
+        }
+        if (rightChildIdx < queue->size && queue->priorityQueue[rightChildIdx]->code[queue->priorityQueue[rightChildIdx]->ip].argTime < queue->priorityQueue[smallest]->code[queue->priorityQueue[smallest]->ip].argTime) {
+            smallest = rightChildIdx;
+        }
+    } else {
+        if (leftChildIdx < queue->size && queue->priorityQueue[leftChildIdx]->priority < queue->priorityQueue[smallest]->priority) {
+            smallest = leftChildIdx;
+        }
+        if (rightChildIdx < queue->size && queue->priorityQueue[rightChildIdx]->priority < queue->priorityQueue[smallest]->priority) {
+            smallest = rightChildIdx;
+        }
     }
 
     if (smallest != index) {
         swap(&queue->priorityQueue[index], &queue->priorityQueue[smallest]);
         bubbleDown(queue, smallest);
     }
+
+
 }
 
 context *dequeue(PriorityQueue *queue) {

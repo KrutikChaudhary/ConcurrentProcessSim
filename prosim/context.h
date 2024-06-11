@@ -14,6 +14,7 @@ enum {
 typedef struct opcode {
     int op;
     int arg;
+    int argTime;
 } opcode;
 
 typedef struct context {

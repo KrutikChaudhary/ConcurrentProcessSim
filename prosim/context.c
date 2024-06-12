@@ -49,7 +49,11 @@ void enqueue(PriorityQueue *queue, context *ctx) {
         return;
     }
     queue->priorityQueue[queue->size] = ctx;
-    bubbleUp(queue, queue->size);
+//    if(queue->priorityQueue[queue->size]<0 || queue->priorityQueue[(queue->size)-1]!=queue->priorityQueue[queue->size]){
+
+//    }
+        bubbleUp(queue, queue->size);
+
     queue->size++;
 }
 
@@ -209,8 +213,12 @@ extern context *context_load(FILE *fin) {
 
 
             strcpy(rq->priorityQueue[0]->state, "running");
-            //printf("oyyy\n");
+            if(rq->priorityQueue[0]->code[rq->priorityQueue[0]->ip].argTime==0){
+                //rq->priorityQueue[0]->code[rq->priorityQueue[0]->ip].argTime=rq->priorityQueue[0]->code[rq->priorityQueue[0]->ip].arg;
+                //printf("AT: %d A: %d\n",rq->priorityQueue[0]->code[rq->priorityQueue[0]->ip].argTime,rq->priorityQueue[0]->code[rq->priorityQueue[0]->ip].arg);
+            }
             printf("%5.5d: process %d %s\n",time,rq->priorityQueue[0]->idx, rq->priorityQueue[0]->state);
+            //printf("oyyy\n");
             quanT=quantum;
             //proc = 1;
             //time--;
@@ -285,12 +293,14 @@ extern int context_next_op(context *cur) {
                     //time++;
                     //printf("%d  oyy\n",rq->size);
                 }
-                else if(strcmp(cur->state,"running")){
+                else {
                     if(cur->code[cur->ip].argTime==0){
                         cur->code[cur->ip].argTime=cur->code[cur->ip].arg;
+                    }if(!strcmp(cur->state,"ready")){
+                        strcpy(cur->state, "running");
+                        printf("%5.5d: process %d %s\n",time,cur->idx, cur->state);
                     }
-                    strcpy(cur->state, "running");
-                    printf("%5.5d: process %d %s\n",time,cur->idx, cur->state);
+
                     //time--;
                 }
                 cur->run_time++;

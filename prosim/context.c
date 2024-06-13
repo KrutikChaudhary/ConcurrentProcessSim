@@ -198,6 +198,7 @@ extern context *context_load(FILE *fin) {
             //printf("OOOOOO\n");
             int ret = context_next_op(current);
             if(ret==0){
+                quanT=0;
                 continue;
             }
             for(int i = 0; i<rq->size; i++){

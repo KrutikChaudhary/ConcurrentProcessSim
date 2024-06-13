@@ -195,8 +195,19 @@ extern context *context_load(FILE *fin) {
             printf("%5.5d: process %d %s\n",time,current->idx, current->state);
         }
         if(!strcmp(current->state, "running")){
-            context_next_op(current);
+            //printf("OOOOOO\n");
+            int ret = context_next_op(current);
+            if(ret==0){
+                continue;
+            }
+            for(int i = 0; i<rq->size; i++){
+                if(!strcmp(rq->priorityQueue[i]->state, "ready")){
+                    rq->priorityQueue[i]->wait_time++;
+                }
+            }
         }
+
+
 
 //        if(quanT==0 && !strcmp(rq->priorityQueue[0]->state,"ready")){
 //            strcpy(rq->priorityQueue[0]->state, "running");
@@ -205,9 +216,9 @@ extern context *context_load(FILE *fin) {
 
         //1
         for(int i = 0; i<numProcs; i++){
-            //printf("DDDDDDDDDDDDDDD\n",rq->size);
-            if(!strcmp(contexts[i].state,"blocked")){
 
+            if(!strcmp(contexts[i].state,"blocked")){
+                //printf("DDDDDDDDDDDDDDD\n",rq->size);
                 context_next_op(&contexts[i]);
             }
         }
@@ -222,7 +233,7 @@ extern context *context_load(FILE *fin) {
 
 //            strcpy(rq->priorityQueue[0]->state, "running");
 //            printf("%5.5d: process %d %s\n",time,rq->priorityQueue[0]->idx, rq->priorityQueue[0]->state);
-            //printf("RRRRR\n");
+            //printf("RRRRR%d\n",rq->size);
             //int proc = 0;
         if(!strcmp(rq->priorityQueue[0]->state, "ready") && strcmp(current->state, "running")){
             current = dequeue(rq);
@@ -233,6 +244,7 @@ extern context *context_load(FILE *fin) {
 //                //printf("AT: %d A: %d\n",rq->priorityQueue[0]->code[rq->priorityQueue[0]->ip].argTime,rq->priorityQueue[0]->code[rq->priorityQueue[0]->ip].arg);
 //            }
             printf("%5.5d: process %d %s\n",time,current->idx, current->state);
+//            current->code[current->ip].argTime;
             //printf("oyyy\n");
             quanT=quantum;
             //proc = 1;
@@ -310,6 +322,7 @@ extern int context_next_op(context *cur) {
                     //printf("%d  oyy\n",rq->size);
                 }
                 else {
+                    //printf("ARG %d ID%d\n",cur->code[cur->ip].argTime,cur->idx);
                     if(cur->code[cur->ip].argTime==0){
                         cur->code[cur->ip].argTime=cur->code[cur->ip].arg;
                     }if(!strcmp(cur->state,"ready")){
@@ -387,7 +400,7 @@ extern int context_next_op(context *cur) {
             case OP_HALT:
                 strcpy(cur->state, "finished");
                 printf("%5.5d: process %d %s\n",time,cur->idx, cur->state);
-                dequeue(rq);
+                //dequeue(rq);
                 return 0;
             default:
                 printf("error, unknown opcode %d at ip %d\n", cur->code[cur->ip].op, cur->ip);

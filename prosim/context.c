@@ -30,7 +30,9 @@ void swap(context **a, context **b) {
 
 void bubbleUp(PriorityQueue *queue, int index) {
     if (queue->priorityQueue[index]->priority < 0) {
-        while (index > 0 && queue->priorityQueue[index]->code[queue->priorityQueue[index]->ip].argTime < queue->priorityQueue[(index - 1) / 2]->code[queue->priorityQueue[(index - 1) / 2]->ip].argTime) {
+
+        //printf("yes %d %d\n",queue->priorityQueue[index]->code[queue->priorityQueue[index]->ip].argTime,queue->priorityQueue[(index - 1) / 2]->code[queue->priorityQueue[(index - 1) / 2]->ip].argTime);
+        while (index > 0 && (queue->priorityQueue[index]->code[queue->priorityQueue[index]->ip].argTime < queue->priorityQueue[(index - 1) / 2]->code[queue->priorityQueue[(index - 1) / 2]->ip].argTime ) || queue->priorityQueue[index]->code[queue->priorityQueue[index]->ip].argTime >0 && queue->priorityQueue[(index - 1) / 2]->code[queue->priorityQueue[(index - 1) / 2]->ip].argTime==0) {
             swap(&queue->priorityQueue[index], &queue->priorityQueue[(index - 1) / 2]);
             index = (index - 1) / 2;
         }
@@ -130,7 +132,7 @@ extern context *context_load(FILE *fin) {
                     contexts[i].code[j].op = k;
                     if (k == OP_LOOP || k == OP_DOOP || k == OP_BLOCK) {
                         fscanf(fin, "%d", &contexts[i].code[j].arg);
-                        //printf("%d ******",contexts[i].code[j].arg);
+                        contexts[i].code[j].argTime=contexts[i].code[j].arg;
                     }
                     break;
                 }
@@ -160,6 +162,8 @@ extern context *context_load(FILE *fin) {
         for(int j = -1; 1; j++){
             if(contexts[i].code[j].op==OP_DOOP){
                 strcpy(contexts[i].state, "ready");
+                //printf("%dARG ARG ARG",contexts[i].code[j].argTime);
+                //context_transfer_argTime(&contexts[i],j);
                 enqueue(rq,&contexts[i]);
                 //contexts[i].code[contexts[i].ip].argTime=contexts[i].code[contexts[i].ip].arg;
                 //printf("%dARG ARG ARG",contexts[i].code[contexts[i].ip].arg);

@@ -353,11 +353,14 @@ extern int context_next_op(context *cur) {
                     //quanT++;
                     //return 1;
                 } else {
+                    if(cur->code[cur->ip].argTime==0){
+                        cur->code[cur->ip].argTime=cur->code[cur->ip].arg;
+                    }
                     cur->block_time++;
                     cur->code[cur->ip].argTime--;
                 }
                 //printf("size %d\n",rq->size);
-                //printf("%d REMAINS\n",cur->code[cur->ip].arg);
+                //printf("%d REMAINS\n",cur->code[cur->ip].argTime);
                 if(cur->code[cur->ip].argTime==0){
                     cur->code[cur->ip].argTime=cur->code[cur->ip].arg;
                     cur->ip++;

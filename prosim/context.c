@@ -347,7 +347,7 @@ extern int context_next_op(context *cur) {
                 if(strcmp(cur->state,"blocked")){
                     strcpy(cur->state, "blocked");
                     printf("%5.5d: process %d %s\n",time,cur->idx, cur->state);
-                    dequeue(rq);
+                    //dequeue(rq);
                     cur->code[cur->ip].argTime=cur->code[cur->ip].arg;
                     //time++;
                     //quanT++;
